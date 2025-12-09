@@ -3,206 +3,270 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Anılarımız</title>
-
+  <title>Kalp Yakalama Oyunu</title>
   <style>
-    :root{
-      --blue1:#0f172a;
-      --blue2:#1e3a8a;
-      --blue3:#3b82f6;
-      --text:#e6eef8;
-      font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+    :root{ --bg:#0f1724; --card:#ffffff; --accent:#ff6b81; --text:#e6eef8 }
+    html,body{height:100%;margin:0;font-family:Inter,Segoe UI,Roboto,system-ui,Arial}
+    body{background:linear-gradient(180deg,#071127, #0f1730);display:flex;align-items:center;justify-content:center;color:var(--text)}
+    .wrap{width:100%;max-width:900px;margin:24px;background:linear-gradient(180deg,rgba(255,255,255,0.02),transparent);border-radius:12px;padding:18px;box-shadow:0 8px 30px rgba(2,6,23,0.6)}
+    header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    h1{font-size:20px;margin:0}
+    #gameCanvas{width:100%;background:linear-gradient(180deg,#071733,#08263c);display:block;border-radius:8px}
+    .info{display:flex;gap:12px;align-items:center;margin-top:12px}
+    .chip{background:rgba(255,255,255,0.03);padding:8px 12px;border-radius:10px;font-weight:600}
+    .controls{display:flex;gap:8px;align-items:center}
+    .btn{background:var(--card);border:1px solid rgba(255,255,255,0.03);padding:8px 12px;border-radius:8px;cursor:pointer}
+    .small{font-size:13px;color:rgba(230,238,248,0.9)}
+    .touchControls{display:none;margin-top:10px;justify-content:center;gap:20px}
+    .touchBtn{width:70px;height:50px;border-radius:10px;background:rgba(255,255,255,0.03);display:flex;align-items:center;justify-content:center;font-weight:700}
+    @media (max-width:640px){
+      .touchControls{display:flex}
     }
-
-    body{
-      margin:0;
-      padding:20px;
-      background:linear-gradient(135deg,var(--blue1),var(--blue2));
-      color:var(--text);
-      display:flex;
-      flex-direction:column;
-      align-items:center;
-    }
-
-    h1{
-      margin-bottom:20px;
-      font-size:28px;
-      text-align:center;
-    }
-
-    .gallery{
-      width:100%;
-      max-width:900px;
-      display:grid;
-      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
-      gap:16px;
-    }
-
-    .section-title{
-      font-size:22px;
-      margin:30px 0 10px;
-      text-align:center;
-      color:var(--blue3);
-    }
-
-    .item{
-      position:relative;
-      cursor:pointer;
-    }
-    .item img, .item video{
-      width:100%;
-      height:240px;
-      object-fit:cover;
-      border-radius:12px;
-      box-shadow:0 4px 14px rgba(0,0,0,0.35);
-      transition:transform .2s;
-    }
-    .item img:hover, .item video:hover{
-      transform:scale(1.03);
-    }
-
-    .modal{
-      position:fixed;
-      inset:0;
-      background:rgba(0,0,0,0.78);
-      display:none;
-      justify-content:center;
-      align-items:center;
-      z-index:100;
-    }
-    .modal.open{display:flex;}
-
-    .modalContent img,
-    .modalContent video{
-      max-width:90%;
-      max-height:90%;
-      border-radius:12px;
-    }
-
-    .closeBtn{
-      position:absolute;
-      top:20px;
-      right:25px;
-      background:#ffffff;
-      color:#000;
-      padding:8px 14px;
-      border-radius:8px;
-      font-weight:600;
-      cursor:pointer;
-      z-index:200;
-      box-shadow:0 0 10px rgba(0,0,0,0.35);
-      transition:0.2s;
-    }
-    .closeBtn:hover{
-      background:#e5e5e5;
-    }
-
   </style>
 </head>
-
 <body>
+  <div class="wrap">
+    <header>
+      <h1>  <span style="color:var(--accent)">Kalp Yakalama Oyunu</span></h1>
+      <div class="small">Ok tuşları ile hareket et — Kalpleri yakala! 💖</div>
+    </header>
 
-  <h1>💙 Anılarımız 💙</h1>
+    <canvas id="gameCanvas" width="800" height="500"></canvas>
 
-  <div class="section-title">💙 Fotoğraflarımız 💙</div>
+    <div class="info">
+      <div class="chip">Puan: <span id="score">0</span></div>
+      <div class="chip">Can: <span id="lives">3</span></div>
+      <div class="chip">Seviye: <span id="level">1</span></div>
+      <div style="flex:1"></div>
+      <div class="controls">
+        <button class="btn" id="pauseBtn">Duraklat</button>
+        <button class="btn" id="restartBtn">Yeniden Başlat</button>
+      </div>
+    </div>
 
-  <div class="gallery">
+    <div class="touchControls">
+      <div class="touchBtn" id="leftTouch">◀</div>
+      <div class="touchBtn" id="rightTouch">▶</div>
+    </div>
 
-    <div class="item"><img src="assets/photo_nur1.jpg"></div>
-    <div class="item"><img src="assets/photo_nur2.jpg"></div>
-    <div class="item"><img src="assets/photo_nur3.jpg"></div>
-    <div class="item"><img src="assets/photo_nur4.jpg"></div>
-    <div class="item"><img src="assets/photo_nur5.jpg"></div>
-
-    <div class="item"><video src="assets/video_nur1.mp4"></video></div>
-    <div class="item"><video src="assets/video_nur2.mp4"></video></div>
-
-  </div>
-
-  <div class="section-title">🎮 Oyun Anılarımız 💙</div>
-
-  <div class="gallery">
-
-    <div class="item"><img src="assets/photo_nur6.jpg"></div>
-    <div class="item"><video src="assets/game_video1.mp4"></video></div>
-    <div class="item"><video src="assets/game_video2.mp4"></video></div>
-    <div class="item"><video src="assets/game_video3.mp4"></video></div>
-    <div class="item"><video src="assets/game_video4.mp4"></video></div>
-    <div class="item"><video src="assets/game_video5.mp4"></video></div>
-    <div class="item"><video src="assets/game_video6.mp4"></video></div>
-    <div class="item"><video src="assets/game_video7.mp4"></video></div>
-    <div class="item"><video src="assets/game_video8.mp4"></video></div>
-    <div class="item"><video src="assets/game_video9.mp4"></video></div>
-    <div class="item"><video src="assets/game_video10.mp4"></video></div>
-    <div class="item"><video src="assets/game_video11.mp4"></video></div>
-    <div class="item"><video src="assets/game_video12.mp4"></video></div>
-    <div class="item"><video src="assets/game_video13.mp4"></video></div>
-    <div class="item"><video src="assets/game_video14.mp4"></video></div>
-    <div class="item"><video src="assets/game_video15.mp4"></video></div>
-    <div class="item"><video src="assets/game_video16.mp4"></video></div>
-    <div class="item"><video src="assets/game_video17.mp4"></video></div>
-    <div class="item"><video src="assets/game_video18.mp4"></video></div>
-    <div class="item"><video src="assets/game_video19.mp4"></video></div>
-    <div class="item"><video src="assets/game_video20.mp4"></video></div>
-    <div class="item"><video src="assets/game_video21.mp4"></video></div>
-    <div class="item"><video src="assets/game_video22.mp4"></video></div>
-    <div class="item"><video src="assets/game_video23.mp4"></video></div>
-    <div class="item"><video src="assets/game_video24.mp4"></video></div>
-    <div class="item"><video src="assets/game_video25.mp4"></video></div>
-    <div class="item"><video src="assets/game_video26.mp4"></video></div>
-    <div class="item"><video src="assets/game_video27.mp4"></video></div>
-    <div class="item"><video src="assets/game_video28.mp4"></video></div>
-    <div class="item"><video src="assets/game_video29.mp4"></video></div>
-    <div class="item"><video src="assets/game_video30.mp4"></video></div>
-    <div class="item"><video src="assets/game_video31.mp4"></video></div>
-    <div class="item"><video src="assets/game_video32.mp4"></video></div>
-    <div class="item"><video src="assets/game_video33.mp4"></video></div>
-    <div class="item"><video src="assets/game_video34.mp4"></video></div>
-    <div class="item"><video src="assets/game_video35.mp4"></video></div>
-    <div class="item"><video src="assets/game_video36.mp4"></video></div>
-    <div class="item"><video src="assets/game_video37.mp4"></video></div>
-    <div class="item"><video src="assets/game_video38.mp4"></video></div>
-    <div class="item"><video src="assets/game_video39.mp4"></video></div>
-    <div class="item"><video src="assets/game_video40.mp4"></video></div>
-    <div class="item"><video src="assets/game_video41.mp4"></video></div>
-
-  </div>
-
-  <div class="modal" id="modal">
-    <div class="closeBtn" id="closeBtn">Kapat ✖</div>
-    <div class="modalContent" id="modalContent"></div>
+    <p class="small" style="margin-top:12px">Seni seviyorum 💖</p>
   </div>
 
   <script>
-    const modal = document.getElementById("modal");
-    const modalContent = document.getElementById("modalContent");
-    const closeBtn = document.getElementById("closeBtn");
+    const canvas = document.getElementById('gameCanvas');
+    const ctx = canvas.getContext('2d');
+    const scoreEl = document.getElementById('score');
+    const livesEl = document.getElementById('lives');
+    const levelEl = document.getElementById('level');
+    const pauseBtn = document.getElementById('pauseBtn');
+    const restartBtn = document.getElementById('restartBtn');
 
-    document.querySelectorAll(".item").forEach(el => {
-      el.addEventListener("click", () => {
-        modal.classList.add("open");
-        modalContent.innerHTML = ""; 
+    let W = canvas.width; let H = canvas.height;
+    let keys = {};
+    let score = 0; let lives = 3; let level = 1;
+    let isPaused = false; let gameOver = false;
 
-        if (el.querySelector("img")) {
-          const img = document.createElement("img");
-          img.src = el.querySelector("img").src;
-          modalContent.appendChild(img);
-        } 
-        else if (el.querySelector("video")) {
-          const video = document.createElement("video");
-          video.src = el.querySelector("video").src;
-          video.controls = true;
-          video.autoplay = true;
-          modalContent.appendChild(video);
-        }
+    const player = {
+      x: W/2 - 85,
+      y: H - 70,
+      w: 170,
+      h: 20,
+      speed: 6,
+      color: '#68d6ff'
+    }
+
+    let hearts = [];
+    let spawnTimer = 0;
+    let spawnInterval = 300;
+
+    // can topları
+    let livesBalls = [];
+    let livesSpawnTimer = 0;
+
+    // PNG kalp ve can topu
+    const heartImg = new Image();
+    heartImg.src = 'https://i.postimg.cc/vBpbTB1r/valentine-love-heart-png-icon-5697001.png';
+    const lifeImg = new Image();
+    lifeImg.src = 'https://i.postimg.cc/5tRQx3mj/red-ball.png'; // kırmızı can topu
+
+    function resizeCanvas(){
+      W = canvas.width; H = canvas.height;
+      player.y = H - 70;
+    }
+
+    function spawnHeart(){
+      const size = 26 + Math.random()*18;
+      hearts.push({
+        x: Math.random()*(W - size - 10) + 5,
+        y: -size,
+        size,
+        speed: 0.6 + Math.random()*0.5 + (level > 3 ? (level*0.1) : 0),
+        wobble: Math.random()*0.04,
+        angle: Math.random()*Math.PI*2
       });
-    });
+    }
 
-    closeBtn.addEventListener("click", () => {
-      modal.classList.remove("open");
-      modalContent.innerHTML = "";
-    });
+    function spawnLifeBall(){
+      const size = 20;
+      livesBalls.push({
+        x: Math.random()*(W - size - 10) + 5,
+        y: -size,
+        size,
+        speed: 1 + Math.random()*0.3
+      });
+    }
+
+    function drawHeart(x, y, size, scale=1){
+      ctx.save();
+      ctx.translate(x, y);
+      ctx.scale(scale, scale);
+      ctx.drawImage(heartImg, -size/2, -size/2, size, size);
+      ctx.restore();
+    }
+
+    function drawLifeBall(x, y, size){
+      ctx.drawImage(lifeImg, x, y, size, size);
+    }
+
+    function update(){
+      if(isPaused || gameOver) return;
+
+      if(keys['ArrowLeft'] || keys['a']) player.x -= player.speed;
+      if(keys['ArrowRight'] || keys['d']) player.x += player.speed;
+      const padding = 10;
+      if(player.x < padding) player.x = padding;
+      if(player.x + player.w > W - padding) player.x = W - player.w - padding;
+
+      spawnTimer++;
+      if(spawnTimer > spawnInterval){
+        spawnTimer = 0; spawnHeart();
+      }
+
+      // can topları çok nadir ve sadece can 2 veya altı
+      livesSpawnTimer++;
+      if(lives < 3 && livesSpawnTimer > 1000){
+        livesSpawnTimer = 0;
+        spawnLifeBall();
+      }
+
+      // kalpler
+      for(let i = hearts.length-1; i>=0; i--){
+        const h = hearts[i];
+        h.y += h.speed;
+        h.angle += h.wobble;
+        h.x += Math.sin(h.angle)*0.8;
+
+        const cx = h.x, cy = h.y, r = h.size/2;
+        const closestX = Math.max(player.x, Math.min(cx, player.x+player.w));
+        const closestY = Math.max(player.y, Math.min(cy, player.y+player.h));
+        const dx = cx - closestX, dy = cy - closestY;
+        if(dx*dx + dy*dy < r*r){
+          score += 10;
+          hearts.splice(i,1);
+          if(score % 100 === 0){ 
+            level++; 
+            spawnInterval = Math.max(60, spawnInterval - 5);
+          }
+          continue;
+        }
+
+        if(h.y - h.size > H){
+          hearts.splice(i,1);
+          lives--;
+          if(lives <= 0){ endGame(); }
+        }
+      }
+
+      // can topları
+      for(let i = livesBalls.length-1; i>=0; i--){
+        const b = livesBalls[i];
+        b.y += b.speed;
+        const cx = b.x + b.size/2, cy = b.y + b.size/2, r = b.size/2;
+        const closestX = Math.max(player.x, Math.min(cx, player.x+player.w));
+        const closestY = Math.max(player.y, Math.min(cy, player.y+player.h));
+        const dx = cx - closestX, dy = cy - closestY;
+        if(dx*dx + dy*dy < r*r){
+          lives++;
+          livesBalls.splice(i,1);
+          continue;
+        }
+        if(b.y - b.size > H){
+          livesBalls.splice(i,1);
+        }
+      }
+
+      scoreEl.textContent = score;
+      livesEl.textContent = lives;
+      levelEl.textContent = level;
+    }
+
+    function draw(){
+      ctx.clearRect(0,0,W,H);
+      const g = ctx.createLinearGradient(0,0,0,H);
+      g.addColorStop(0,'rgba(8,38,60,0.12)');
+      g.addColorStop(1,'rgba(2,8,20,0.12)');
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,W,H);
+
+      ctx.fillStyle = player.color;
+      roundRect(ctx, player.x, player.y, player.w, player.h, 8, true, false);
+      drawHeart(player.x + player.w/2, player.y - 18, 24, 0.8);
+
+      for(const h of hearts){
+        drawHeart(h.x + h.size/2, h.y + h.size/2, h.size);
+      }
+      for(const b of livesBalls){
+        drawLifeBall(b.x, b.y, b.size);
+      }
+
+      if(isPaused){
+        ctx.fillStyle = 'rgba(0,0,0,0.45)'; ctx.fillRect(0,0,W,H);
+        ctx.fillStyle = 'white'; ctx.font = '28px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('Duraklatıldı', W/2, H/2);
+      }
+      if(gameOver){
+        ctx.fillStyle = 'rgba(255,255,255,0.55)'; ctx.fillRect(0,0,W,H);
+        ctx.fillStyle = 'white'; ctx.font = '28px sans-serif'; ctx.textAlign = 'center';
+        ctx.fillText('Oyun Bitti — Puan: '+score, W/2, H/2 - 18);
+        ctx.font = '18px sans-serif';
+        ctx.fillText('Yeniden başlamak için Yeniden Başlat düğmesine bas', W/2, H/2 + 18);
+      }
+    }
+
+    function loop(){ update(); draw(); requestAnimationFrame(loop); }
+    function endGame(){ gameOver = true; isPaused = false; }
+
+    function roundRect(ctx, x, y, w, h, r, fill, stroke) {
+      if (typeof r === 'undefined') r = 5;
+      ctx.beginPath();
+      ctx.moveTo(x+r, y);
+      ctx.arcTo(x+w, y, x+w, y+h, r);
+      ctx.arcTo(x+w, y+h, x, y+h, r);
+      ctx.arcTo(x, y+h, x, y, r);
+      ctx.arcTo(x, y, x+w, y, r);
+      ctx.closePath();
+      if (fill) ctx.fill();
+      if (stroke) ctx.stroke();
+    }
+
+    window.addEventListener('keydown', e => { keys[e.key] = true; if(e.key===' '){ isPaused = !isPaused; } });
+    window.addEventListener('keyup', e => { keys[e.key] = false; });
+
+    pauseBtn.addEventListener('click', ()=>{ isPaused = !isPaused; pauseBtn.textContent = isPaused ? 'Devam Et' : 'Duraklat'; });
+    restartBtn.addEventListener('click', ()=>{ resetGame(); });
+
+    document.getElementById('leftTouch').addEventListener('touchstart', ()=> keys['ArrowLeft']=true);
+    document.getElementById('leftTouch').addEventListener('touchend', ()=> keys['ArrowLeft']=false);
+    document.getElementById('rightTouch').addEventListener('touchstart', ()=> keys['ArrowRight']=true);
+    document.getElementById('rightTouch').addEventListener('touchend', ()=> keys['ArrowRight']=false);
+
+    function resetGame(){
+      score = 0; lives = 3; level = 1; hearts = []; livesBalls = []; spawnInterval = 150; spawnTimer = 0; livesSpawnTimer=0; gameOver = false; isPaused = false; pauseBtn.textContent='Duraklat';
+      scoreEl.textContent = score; livesEl.textContent = lives; levelEl.textContent = level;
+    }
+
+    resizeCanvas();
+    loop();
   </script>
-
 </body>
 </html>

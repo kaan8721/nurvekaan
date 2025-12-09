@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="tr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anılarımız</title>
+
+  <style>
+    :root{
+      --blue1:#0f172a;
+      --blue2:#1e3a8a;
+      --blue3:#3b82f6;
+      --text:#e6eef8;
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto;
+    }
+
+    body{
+      margin:0;
+      padding:20px;
+      background:linear-gradient(135deg,var(--blue1),var(--blue2));
+      color:var(--text);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    h1{
+      margin-bottom:20px;
+      font-size:28px;
+      text-align:center;
+    }
+
+    .gallery{
+      width:100%;
+      max-width:900px;
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+      gap:16px;
+    }
+
+    .section-title{
+      font-size:22px;
+      margin:30px 0 10px;
+      text-align:center;
+      color:var(--blue3);
+    }
+
+    .item{
+      position:relative;
+      cursor:pointer;
+    }
+    .item img, .item video{
+      width:100%;
+      height:240px;
+      object-fit:cover;
+      border-radius:12px;
+      box-shadow:0 4px 14px rgba(0,0,0,0.35);
+      transition:transform .2s;
+    }
+    .item img:hover, .item video:hover{
+      transform:scale(1.03);
+    }
+
+    .modal{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.78);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:100;
+    }
+    .modal.open{display:flex;}
+
+    .modalContent img,
+    .modalContent video{
+      max-width:90%;
+      max-height:90%;
+      border-radius:12px;
+    }
+
+    .closeBtn{
+      position:absolute;
+      top:20px;
+      right:25px;
+      background:#ffffff;
+      color:#000;
+      padding:8px 14px;
+      border-radius:8px;
+      font-weight:600;
+      cursor:pointer;
+      z-index:200;
+      box-shadow:0 0 10px rgba(0,0,0,0.35);
+      transition:0.2s;
+    }
+    .closeBtn:hover{
+      background:#e5e5e5;
+    }
+
+  </style>
+</head>
+
+<body>
+
+  <h1>💙 Anılarımız 💙</h1>
+
+  <div class="section-title">💙 Fotoğraflarımız 💙</div>
+
+  <div class="gallery">
+
+    <div class="item"><img src="assets/photo_nur1.jpg"></div>
+    <div class="item"><img src="assets/photo_nur2.jpg"></div>
+    <div class="item"><img src="assets/photo_nur3.jpg"></div>
+    <div class="item"><img src="assets/photo_nur4.jpg"></div>
+    <div class="item"><img src="assets/photo_nur5.jpg"></div>
+
+    <div class="item"><video src="assets/video_nur1.mp4"></video></div>
+    <div class="item"><video src="assets/video_nur2.mp4"></video></div>
+
+  </div>
+
+  <div class="section-title">🎮 Oyun Anılarımız 💙</div>
+
+  <div class="gallery">
+
+    <div class="item"><img src="assets/photo_nur6.jpg"></div>
+    <div class="item"><video src="assets/game_video1.mp4"></video></div>
+    <div class="item"><video src="assets/game_video2.mp4"></video></div>
+    <div class="item"><video src="assets/game_video3.mp4"></video></div>
+    <div class="item"><video src="assets/game_video4.mp4"></video></div>
+    <div class="item"><video src="assets/game_video5.mp4"></video></div>
+    <div class="item"><video src="assets/game_video6.mp4"></video></div>
+    <div class="item"><video src="assets/game_video7.mp4"></video></div>
+    <div class="item"><video src="assets/game_video8.mp4"></video></div>
+    <div class="item"><video src="assets/game_video9.mp4"></video></div>
+    <div class="item"><video src="assets/game_video10.mp4"></video></div>
+    <div class="item"><video src="assets/game_video11.mp4"></video></div>
+    <div class="item"><video src="assets/game_video12.mp4"></video></div>
+    <div class="item"><video src="assets/game_video13.mp4"></video></div>
+    <div class="item"><video src="assets/game_video14.mp4"></video></div>
+    <div class="item"><video src="assets/game_video15.mp4"></video></div>
+    <div class="item"><video src="assets/game_video16.mp4"></video></div>
+    <div class="item"><video src="assets/game_video17.mp4"></video></div>
+    <div class="item"><video src="assets/game_video18.mp4"></video></div>
+    <div class="item"><video src="assets/game_video19.mp4"></video></div>
+    <div class="item"><video src="assets/game_video20.mp4"></video></div>
+    <div class="item"><video src="assets/game_video21.mp4"></video></div>
+    <div class="item"><video src="assets/game_video22.mp4"></video></div>
+    <div class="item"><video src="assets/game_video23.mp4"></video></div>
+    <div class="item"><video src="assets/game_video24.mp4"></video></div>
+    <div class="item"><video src="assets/game_video25.mp4"></video></div>
+    <div class="item"><video src="assets/game_video26.mp4"></video></div>
+    <div class="item"><video src="assets/game_video27.mp4"></video></div>
+    <div class="item"><video src="assets/game_video28.mp4"></video></div>
+    <div class="item"><video src="assets/game_video29.mp4"></video></div>
+    <div class="item"><video src="assets/game_video30.mp4"></video></div>
+    <div class="item"><video src="assets/game_video31.mp4"></video></div>
+    <div class="item"><video src="assets/game_video32.mp4"></video></div>
+    <div class="item"><video src="assets/game_video33.mp4"></video></div>
+    <div class="item"><video src="assets/game_video34.mp4"></video></div>
+    <div class="item"><video src="assets/game_video35.mp4"></video></div>
+    <div class="item"><video src="assets/game_video36.mp4"></video></div>
+    <div class="item"><video src="assets/game_video37.mp4"></video></div>
+    <div class="item"><video src="assets/game_video38.mp4"></video></div>
+    <div class="item"><video src="assets/game_video39.mp4"></video></div>
+    <div class="item"><video src="assets/game_video40.mp4"></video></div>
+    <div class="item"><video src="assets/game_video41.mp4"></video></div>
+
+  </div>
+
+  <div class="modal" id="modal">
+    <div class="closeBtn" id="closeBtn">Kapat ✖</div>
+    <div class="modalContent" id="modalContent"></div>
+  </div>
+
+  <script>
+    const modal = document.getElementById("modal");
+    const modalContent = document.getElementById("modalContent");
+    const closeBtn = document.getElementById("closeBtn");
+
+    document.querySelectorAll(".item").forEach(el => {
+      el.addEventListener("click", () => {
+        modal.classList.add("open");
+        modalContent.innerHTML = ""; 
+
+        if (el.querySelector("img")) {
+          const img = document.createElement("img");
+          img.src = el.querySelector("img").src;
+          modalContent.appendChild(img);
+        } 
+        else if (el.querySelector("video")) {
+          const video = document.createElement("video");
+          video.src = el.querySelector("video").src;
+          video.controls = true;
+          video.autoplay = true;
+          modalContent.appendChild(video);
+        }
+      });
+    });
+
+    closeBtn.addEventListener("click", () => {
+      modal.classList.remove("open");
+      modalContent.innerHTML = "";
+    });
+  </script>
+
+</body>
+</html>
